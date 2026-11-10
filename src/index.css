@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Outfit', sans-serif;
+  }
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Ensure canvas (e.g. confetti) never intercepts mouse clicks */
+canvas {
+  pointer-events: none !important;
+}
+
+/* Custom scrollbars and glow effects */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Custom radial glows */
+.glow-cyan {
+  box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.35);
+}
+.glow-gold {
+  box-shadow: 0 0 40px -10px rgba(234, 179, 8, 0.35);
+}
+.glow-purple {
+  box-shadow: 0 0 40px -10px rgba(168, 85, 247, 0.3);
+}
+
+/* Print styles for the Executive report (Clean multi-page support with no broken sections) */
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 12mm 14mm;
+  }
+  
+  html, body {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  header, footer, nav, .no-print {
+    display: none !important;
+  }
+
+  #root, main {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+
+  #executive-report-canvas {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Prevent awkward splits inside any card or section */
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Force intentional page break if needed */
+  .print-page-break {
+    page-break-before: always !important;
+    break-before: always !important;
+  }
+
+  /* Force background colors on borders for print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
