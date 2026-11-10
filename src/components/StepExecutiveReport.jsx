@@ -282,17 +282,27 @@ export function StepExecutiveReport({
             3. Auditoría de Brecha Curricular (Contraste Teoría Tradicional vs. Mercado Real)
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 print:gap-2 text-xs print:text-[9.5px]">
-            <div className="p-3 print:p-2 rounded-xl bg-slate-900/40 print:bg-slate-50 print:border print:border-slate-300 border border-slate-800">
-              <strong className="text-rose-400 print:text-black block text-[11px] print:text-[9px] mb-1">Materias Universitarias en Riesgo de Desfase:</strong>
-              <span className="text-slate-300 print:text-black leading-relaxed block">
-                {careerData.obsoleteSubjects.join(' • ')}
-              </span>
+            <div className="p-3.5 print:p-2 rounded-xl bg-slate-900/40 print:bg-slate-50 print:border print:border-slate-300 border border-slate-800 space-y-2">
+              <strong className="text-rose-400 print:text-black block text-[11px] print:text-[9px]">Materias Universitarias en Riesgo de Desfase:</strong>
+              <ul className="space-y-1.5 text-slate-300 print:text-black">
+                {careerData.obsoleteSubjects.map((sub, sIdx) => (
+                  <li key={sIdx} className="flex items-start gap-2 leading-relaxed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
+                    <span>{sub}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="p-3 print:p-2 rounded-xl bg-slate-900/40 print:bg-slate-50 print:border print:border-slate-300 border border-slate-800">
-              <strong className="text-emerald-400 print:text-black block text-[11px] print:text-[9px] mb-1">Requerimientos Reales del Mercado Actual (Puntos Ciegos):</strong>
-              <span className="text-slate-300 print:text-black leading-relaxed block">
-                {careerData.curriculumBlindSpots.join(' • ')}
-              </span>
+            <div className="p-3.5 print:p-2 rounded-xl bg-slate-900/40 print:bg-slate-50 print:border print:border-slate-300 border border-slate-800 space-y-2">
+              <strong className="text-emerald-400 print:text-black block text-[11px] print:text-[9px]">Requerimientos Reales del Mercado Actual (Puntos Ciegos):</strong>
+              <ul className="space-y-1.5 text-slate-300 print:text-black">
+                {careerData.curriculumBlindSpots.map((blind, bIdx) => (
+                  <li key={bIdx} className="flex items-start gap-2 leading-relaxed">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
+                    <span>{blind}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
