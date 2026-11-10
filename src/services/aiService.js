@@ -169,7 +169,27 @@ export async function fetchCareerWithAI(careerName) {
     }
   } catch (e) {}
 
-  // 3. Si no hay API key configurada, usar de inmediato el motor heurístico local
+  // 3. Intentar primero a través del Endpoint Serverless Seguro de Vercel (/api/generate)
+  // Esto protege las claves en el servidor para que ningún bot de internet las detecte.
+  try {
+    const serverRes = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ careerName: cleanName })
+    });
+
+    if (serverRes.ok) {
+      const serverData = await serverRes.json();
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify(serverData));
+      } catch (e) {}
+      return { ...serverData, fromAI: true, aiProvider: 'Servidor Seguro Vercel (IA en Vivo)' };
+    }
+  } catch (e) {
+    // Si no está corriendo en Vercel o el endpoint falla, continuar
+  }
+
+  // 4. Si hay API key configurada localmente en el dispositivo del Kiosco (localStorage)
   const apiKey = getAiApiKey();
   if (!apiKey) {
     return { ...findCareerOrGenerate(cleanName), fromAI: false, reason: 'no_api_key' };
