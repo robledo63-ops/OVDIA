@@ -52,7 +52,7 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
 
   const careerData = findCareerOrGenerate(studentData?.career);
 
-  // Build the complete email text body
+  // Build the complete email text body (fallback)
   const buildEmailBody = () => {
     const superpowers = (aeiouData?.humanSuperpowers || careerData.humanSuperpowers.slice(0, 3)).join('\n• ');
     return `REPORTE EJECUTIVO DE PROSPECCIÓN Y EGRESO 2030 (MODELO OVDIA)
@@ -111,8 +111,209 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
 `;
   };
 
+  // Build the complete modern HTML email layout
+  const buildEmailHtml = () => {
+    const superpowersList = aeiouData?.humanSuperpowers?.length
+      ? aeiouData.humanSuperpowers.slice(0, 3)
+      : careerData.humanSuperpowers.slice(0, 3);
+    const semaphoreText = baniData?.semaphore || 'SEMÁFORO VERDE - ALTA PROSPECCIÓN 2030';
+    const isGreen = semaphoreText.includes('VERDE');
+    const isYellow = semaphoreText.includes('AMARILLO') || semaphoreText.includes('ÁMBAR');
+    const semColor = isGreen ? '#10b981' : isYellow ? '#f59e0b' : '#ef4444';
+    const semBg = isGreen ? '#064e3b' : isYellow ? '#78350f' : '#7f1d1d';
+    const dateFormatted = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte Vocacional OVDIA 2030</title>
+</head>
+<body style="margin: 0; padding: 20px 10px; background-color: #0b0f19; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #f1f5f9;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 640px; background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+    
+    <!-- HEADER -->
+    <tr>
+      <td style="padding: 32px 28px 24px; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); border-bottom: 2px solid #3b82f6;">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #60a5fa; text-transform: uppercase; margin-bottom: 8px;">
+          PROSPECCIÓN VOCACIONAL DISRUPTIVA • OVDIA 2030
+        </div>
+        <h1 style="margin: 0; font-size: 24px; font-weight: 800; color: #ffffff; line-height: 1.25;">
+          Reporte Ejecutivo de Prospección & Egreso 2030
+        </h1>
+        <div style="margin-top: 8px; font-size: 13px; color: #94a3b8;">
+          Metodología avalada por el <strong style="color: #e2e8f0;">Lic. Francisco Javier Robledo Zatarain</strong> • ${dateFormatted}
+        </div>
+      </td>
+    </tr>
+
+    <!-- TARJETA DEL ESTUDIANTE -->
+    <tr>
+      <td style="padding: 24px 28px;">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #1e293b; border-radius: 12px; border: 1px solid #334155;">
+          <tr>
+            <td style="padding: 18px 20px;">
+              <div style="font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Aspirante Evaluado</div>
+              <div style="font-size: 20px; font-weight: 800; color: #38bdf8; margin: 4px 0 2px;">
+                ${studentData?.name || 'Aspirante OVDIA'}
+              </div>
+              <div style="font-size: 13px; color: #cbd5e1;">${studentData?.grade || '5.º Semestre de Bachillerato'}</div>
+              
+              <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid #334155;">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td valign="top" style="width: 60%;">
+                      <div style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Plan A Universitario</div>
+                      <div style="font-size: 15px; font-weight: 700; color: #ffffff;">${careerData.name}</div>
+                      <div style="font-size: 12px; color: #818cf8; margin-top: 2px;">Rol: ${careerData.emergentRole2030}</div>
+                    </td>
+                    <td valign="top" align="right" style="width: 40%;">
+                      <div style="display: inline-block; padding: 6px 12px; background-color: ${semBg}; border: 1px solid ${semColor}; border-radius: 20px; color: ${semColor}; font-size: 11px; font-weight: 800; text-align: center;">
+                        ● ${semaphoreText}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- SECCION 1: VIABILIDAD BANI -->
+    <tr>
+      <td style="padding: 0 28px 20px;">
+        <div style="background-color: #0f172a; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px 18px; border: 1px solid #1e293b; border-left: 4px solid #3b82f6;">
+          <div style="font-size: 12px; font-weight: 800; color: #60a5fa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+            1. Diagnóstico de Viabilidad BANI (Horizonte 2030)
+          </div>
+          <p style="margin: 0; font-size: 14px; color: #cbd5e1; line-height: 1.6;">
+            ${careerData.summary2030}
+          </p>
+          <div style="margin-top: 10px; font-size: 12px; color: #94a3b8; font-weight: 600;">
+            ⚡ Exposición a Automatización Operativa: <strong style="color: #f59e0b;">${careerData.disruptionScore}%</strong>
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- SECCION 2: 3 SUPERPODERES HUMANOS -->
+    <tr>
+      <td style="padding: 0 28px 24px;">
+        <div style="font-size: 13px; font-weight: 800; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
+          2. Tus 3 Superpoderes Humanos Insustituibles (El 30% Estratégico)
+        </div>
+        ${superpowersList.map((sp, idx) => `
+          <div style="background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="width: 28px; vertical-align: top;">
+                  <div style="width: 22px; height: 22px; border-radius: 50%; background-color: #3b82f6; color: #ffffff; text-align: center; font-size: 12px; line-height: 22px; font-weight: 800;">
+                    ${idx + 1}
+                  </div>
+                </td>
+                <td style="vertical-align: middle; padding-left: 8px;">
+                  <div style="font-size: 14px; font-weight: 600; color: #f8fafc;">${sp}</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        `).join('')}
+      </td>
+    </tr>
+
+    <!-- SECCION 3: BRECHA CURRICULAR -->
+    <tr>
+      <td style="padding: 0 28px 24px;">
+        <div style="font-size: 13px; font-weight: 800; color: #f1f5f9; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
+          3. Auditoría de Brecha Curricular (Universidad vs. Mercado)
+        </div>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <td valign="top" style="width: 50%; padding-right: 6px;">
+              <div style="background-color: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 14px 14px; min-height: 120px;">
+                <div style="font-size: 11px; font-weight: 800; color: #f87171; text-transform: uppercase; margin-bottom: 8px;">
+                  ⚠️ Materias con Riesgo de Desfase
+                </div>
+                <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: #fca5a5; line-height: 1.5;">
+                  ${careerData.obsoleteSubjects.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}
+                </ul>
+              </div>
+            </td>
+            <td valign="top" style="width: 50%; padding-left: 6px;">
+              <div style="background-color: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 14px 14px; min-height: 120px;">
+                <div style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; margin-bottom: 8px;">
+                  🎯 Exigencias Reales del Mercado
+                </div>
+                <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: #6ee7b7; line-height: 1.5;">
+                  ${careerData.curriculumBlindSpots.map(s => `<li style="margin-bottom: 4px;">${s}</li>`).join('')}
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- SECCION 4: RUTA BIMODAL & PLAN B -->
+    <tr>
+      <td style="padding: 0 28px 24px;">
+        <div style="background-color: #1e1b4b; border: 1px solid #4338ca; border-radius: 12px; padding: 18px 20px;">
+          <div style="font-size: 12px; font-weight: 800; color: #a5b4fc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">
+            4. Ruta Bimodal & Acelerador Táctico
+          </div>
+          <div style="font-size: 13px; color: #e0e7ff; margin-bottom: 8px; line-height: 1.5;">
+            <strong>🎓 Vía 1 (Universidad 4-5 años):</strong> ${careerData.bimodalPath.via1}
+          </div>
+          <div style="font-size: 13px; color: #e0e7ff; margin-bottom: 8px; line-height: 1.5;">
+            <strong>⚡ Vía 2 (Microcredenciales 3-6 meses):</strong> ${careerData.bimodalPath.via2}
+          </div>
+          <div style="font-size: 13px; color: #fbbf24; margin-bottom: 12px; line-height: 1.5;">
+            <strong>🛡️ Alternativa Plan B:</strong> ${careerData.odysseyPlans.plan2.title}
+          </div>
+          <div style="background-color: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #cbd5e1;">
+            📍 <strong>Misión Prototipado Stanford (7 Días):</strong> ${careerData.rapidPrototype.interviewTitle}
+          </div>
+        </div>
+      </td>
+    </tr>
+
+    <!-- SECCION 5: COMPROMISO FAMILIAR -->
+    <tr>
+      <td style="padding: 0 28px 28px;">
+        <div style="background-color: #0f172a; border-radius: 8px; padding: 16px 18px; border: 1px solid #1e293b; font-size: 12px; color: #94a3b8; font-style: italic; line-height: 1.6;">
+          "Presento este reporte a mi familia como resultado de una investigación seria y basada en datos, comprometiéndome a actuar con disciplina y adaptabilidad bajo el protocolo de tregua de 30 días para evaluar la evidencia de campo y microcredenciales."
+        </div>
+      </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+      <td style="padding: 24px 28px; background-color: #0b0f19; border-top: 1px solid #1f2937; text-align: center;">
+        <div style="font-size: 13px; font-weight: 700; color: #f1f5f9;">
+          Lic. Francisco Javier Robledo Zatarain
+        </div>
+        <div style="font-size: 11px; color: #64748b; margin-top: 4px;">
+          Orientación Vocacional Disruptiva con Inteligencia Artificial (OVDIA 2030)
+        </div>
+        <div style="font-size: 11px; color: #475569; margin-top: 6px;">
+          Contacto: psicfjrz@hotmail.com • Tijuana, Baja California, México
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</body>
+</html>
+    `.trim();
+  };
+
   const emailSubject = `Tu Reporte Vocacional OVDIA 2030 - ${studentData?.name || 'Aspirante'}`;
   const emailBody = buildEmailBody();
+  const emailHtml = buildEmailHtml();
 
   const isConfigured = Boolean(
     activeConfig.serviceId && activeConfig.templateId && activeConfig.publicKey
@@ -168,7 +369,9 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
             career_name: careerData.name,
             subject: emailSubject,
             title: emailSubject,
-            message: emailBody
+            message: emailHtml,
+            message_html: emailHtml,
+            message_text: emailBody
           },
           activeConfig.publicKey
         );
