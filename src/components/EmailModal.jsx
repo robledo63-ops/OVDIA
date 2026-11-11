@@ -3,6 +3,12 @@ import { Mail, CheckCircle2, Send, Loader2, Sparkles, FileText, ArrowRight, Sett
 import emailjs from '@emailjs/browser';
 import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
 
+const DEFAULT_EMAILJS = {
+  serviceId: 'service_s9smlgp',
+  templateId: 'template_vu80u59',
+  publicKey: '5Eao8q2W0LxMwiaWh'
+};
+
 export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }) {
   const [emailInput, setEmailInput] = useState(studentData?.email || '');
   const [isSending, setIsSending] = useState(false);
@@ -17,20 +23,26 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
-          if (parsed.serviceId && parsed.templateId && parsed.publicKey) {
-            return parsed;
+          if (parsed && (parsed.serviceId || parsed.templateId || parsed.publicKey)) {
+            return {
+              serviceId: parsed.serviceId?.trim() || DEFAULT_EMAILJS.serviceId,
+              templateId: parsed.templateId?.trim() || DEFAULT_EMAILJS.templateId,
+              publicKey: parsed.publicKey?.trim() || DEFAULT_EMAILJS.publicKey
+            };
           }
         } catch (e) {}
       }
     }
-    return {
-      serviceId: 'service_s9smlgp',
-      templateId: 'template_vu80u59',
-      publicKey: '5Eao8q2W0LxMwiaWh'
-    };
+    return DEFAULT_EMAILJS;
   });
 
-  const [configInputs, setConfigInputs] = useState(emailJsConfig);
+  const activeConfig = {
+    serviceId: emailJsConfig?.serviceId?.trim() || DEFAULT_EMAILJS.serviceId,
+    templateId: emailJsConfig?.templateId?.trim() || DEFAULT_EMAILJS.templateId,
+    publicKey: emailJsConfig?.publicKey?.trim() || DEFAULT_EMAILJS.publicKey
+  };
+
+  const [configInputs, setConfigInputs] = useState(activeConfig);
   const [configSavedNotice, setConfigSavedNotice] = useState(false);
 
   if (!isOpen) return null;
@@ -100,7 +112,7 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
   const emailBody = buildEmailBody();
 
   const isConfigured = Boolean(
-    emailJsConfig.serviceId && emailJsConfig.templateId && emailJsConfig.publicKey
+    activeConfig.serviceId && activeConfig.templateId && activeConfig.publicKey
   );
 
   // 1. Envío 100% Automático en 1 Clic
@@ -142,8 +154,8 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
     if (isConfigured) {
       try {
         await emailjs.send(
-          emailJsConfig.serviceId,
-          emailJsConfig.templateId,
+          activeConfig.serviceId,
+          activeConfig.templateId,
           {
             to_email: emailInput,
             email: emailInput,
@@ -155,7 +167,7 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
             title: emailSubject,
             message: emailBody
           },
-          emailJsConfig.publicKey
+          activeConfig.publicKey
         );
 
         setIsSending(false);
