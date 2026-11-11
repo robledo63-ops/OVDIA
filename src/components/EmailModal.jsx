@@ -10,15 +10,24 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
   const [copiedSuccess, setCopiedSuccess] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
 
-  // EmailJS config stored in localStorage for the kiosk stand
+  // EmailJS config stored in localStorage for the kiosk stand (preconfigurado de fábrica con tus credenciales)
   const [emailJsConfig, setEmailJsConfig] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ovdia_emailjs_config');
       if (saved) {
-        try { return JSON.parse(saved); } catch (e) {}
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed.serviceId && parsed.templateId && parsed.publicKey) {
+            return parsed;
+          }
+        } catch (e) {}
       }
     }
-    return { serviceId: '', templateId: '', publicKey: '' };
+    return {
+      serviceId: 'service_s9smlgp',
+      templateId: 'template_vu80u59',
+      publicKey: '5Eao8q2W0LxMwiaWh'
+    };
   });
 
   const [configInputs, setConfigInputs] = useState(emailJsConfig);
@@ -137,9 +146,13 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
           emailJsConfig.templateId,
           {
             to_email: emailInput,
+            email: emailInput,
+            to_name: studentData?.name || 'Aspirante',
+            name: studentData?.name || 'Aspirante',
             student_name: studentData?.name || 'Aspirante',
             career_name: careerData.name,
             subject: emailSubject,
+            title: emailSubject,
             message: emailBody
           },
           emailJsConfig.publicKey
