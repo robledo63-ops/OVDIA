@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser';
 import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
 
 const DEFAULT_EMAILJS = {
-  serviceId: 'service_s9smlgp',
+  serviceId: 'service_rwv9bvd',
   templateId: 'template_vu80u59',
   publicKey: '5Eao8q2W0LxMwiaWh'
 };
@@ -24,8 +24,9 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
         try {
           const parsed = JSON.parse(saved);
           if (parsed && (parsed.serviceId || parsed.templateId || parsed.publicKey)) {
+            const svc = (!parsed.serviceId || parsed.serviceId === 'service_s9smlgp') ? DEFAULT_EMAILJS.serviceId : parsed.serviceId.trim();
             return {
-              serviceId: parsed.serviceId?.trim() || DEFAULT_EMAILJS.serviceId,
+              serviceId: svc,
               templateId: parsed.templateId?.trim() || DEFAULT_EMAILJS.templateId,
               publicKey: parsed.publicKey?.trim() || DEFAULT_EMAILJS.publicKey
             };
@@ -37,7 +38,7 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
   });
 
   const activeConfig = {
-    serviceId: emailJsConfig?.serviceId?.trim() || DEFAULT_EMAILJS.serviceId,
+    serviceId: (!emailJsConfig?.serviceId || emailJsConfig?.serviceId === 'service_s9smlgp') ? DEFAULT_EMAILJS.serviceId : emailJsConfig.serviceId.trim(),
     templateId: emailJsConfig?.templateId?.trim() || DEFAULT_EMAILJS.templateId,
     publicKey: emailJsConfig?.publicKey?.trim() || DEFAULT_EMAILJS.publicKey
   };
