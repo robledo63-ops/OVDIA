@@ -46,7 +46,7 @@ export function StepAeiouRadar({ initialAeiou, onNext, onBack, studentName }) {
   ];
 
   const interactionOptions = [
-    'Interacción Cercana 1 a 1 (diálogo íntimo)',
+    'Pláticas cara a cara (1 a 1)',
     'Colaboración Ágil en Equipos Pequeños',
     'Trabajo Autónomo en Solitario',
     'Liderazgo frente a Audiencias y Grupos'
@@ -68,24 +68,26 @@ export function StepAeiouRadar({ initialAeiou, onNext, onBack, studentName }) {
   const deriveSuperpowers = () => {
     const list = [];
     if (selectedActivityIds.includes('escuchar')) {
-      list.push('Empatía Relacional y Contención Afectiva en Crisis');
+      list.push('Empatía, saber escuchar y apoyar a otros en momentos difíciles');
     }
     if (selectedActivityIds.includes('crear')) {
-      list.push('Creatividad Divergente y Narrativa de Sentido Humano');
+      list.push('Creatividad original y saber contar historias que conecten con la gente');
     }
     if (selectedActivityIds.includes('tecnologia') || selectedActivityIds.includes('investigar')) {
-      list.push('Juicio Crítico y Arquitectura de Soluciones Complejas');
+      list.push('Pensamiento lógico y resolver problemas difíciles paso a paso');
     }
     if (selectedActivityIds.includes('liderar')) {
-      list.push('Negociación Compleja y Resolución Pacífica de Conflictos');
+      list.push('Capacidad para negociar y llegar a acuerdos pacíficos');
     }
     if (selectedActivityIds.includes('construir')) {
-      list.push('Pensamiento Sistémico Práctico y Destreza de Campo');
+      list.push('Habilidad práctica para resolver retos en el mundo real');
     }
 
     // Default fallbacks to guarantee 3 robust powers
-    if (!list.includes('Juicio Ético y Criterio Contextualizado')) list.push('Juicio Ético y Criterio Contextualizado');
-    if (list.length < 3) list.push('Escucha Activa y Lectura de Lenguaje No Verbal');
+    if (!list.includes('Criterio ético para tomar decisiones justas y correctas')) {
+      list.push('Criterio ético para tomar decisiones justas y correctas');
+    }
+    if (list.length < 3) list.push('Saber escuchar y entender lo que otros sienten sin que lo digan');
     return list.slice(0, 3);
   };
 
@@ -118,7 +120,7 @@ export function StepAeiouRadar({ initialAeiou, onNext, onBack, studentName }) {
           <span>Bitácora AEIOU (Stanford Life Design)</span>
         </div>
         <h2 className="text-3xl md:text-4xl font-heading font-black">
-          Tu Brújula de Flujo: <span className="text-cyan-400">Energía Real vs. Compromiso</span>
+          Tu Brújula de Energía: <span className="text-cyan-400">¿Qué te apasiona y te llena de pila?</span>
         </h2>
         <p className="text-slate-300 text-sm md:text-base leading-relaxed">
           La IA no tiene cuerpo ni biografía. Para que te entregue proyecciones de alto valor al 2030, necesita tus patrones reales de flujo (cuándo se te pasa el tiempo volando y qué te llena de vitalidad).
@@ -221,9 +223,9 @@ export function StepAeiouRadar({ initialAeiou, onNext, onBack, studentName }) {
           <div className="flex items-center justify-between text-xs font-bold text-slate-200">
             <span className="flex items-center gap-2">
               <Flame className="w-4 h-4 text-amber-400" />
-              Compromiso / Flow en tus momentos pico: {flowScore}%
+              Enfoque y Concentración en tus mejores momentos: {flowScore}%
             </span>
-            <span className="text-[11px] text-slate-400">¿Qué tan absorto te sientes?</span>
+            <span className="text-[11px] text-slate-400">¿Se te pasa el tiempo volando?</span>
           </div>
           <input
             type="range"
@@ -237,9 +239,9 @@ export function StepAeiouRadar({ initialAeiou, onNext, onBack, studentName }) {
           <div className="flex items-center justify-between text-xs font-bold text-slate-200 pt-2 border-t border-slate-900">
             <span className="flex items-center gap-2">
               <BatteryCharging className="w-4 h-4 text-emerald-400" />
-              Vitalidad y Energía resultante al terminar: {energyScore}%
+              Nivel de Pila y Entusiasmo al terminar: {energyScore}%
             </span>
-            <span className="text-[11px] text-slate-400">¿Sales energizado o drenado?</span>
+            <span className="text-[11px] text-slate-400">¿Terminas con ganas o cansado?</span>
           </div>
           <input
             type="range"

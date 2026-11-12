@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Mail, Printer, Download, Sparkles, CheckCircle2, ShieldCheck, Heart, User, Compass, ArrowRight, RotateCcw, Loader2, Terminal } from 'lucide-react';
+import { Mail, Printer, Download, Sparkles, CheckCircle2, ShieldCheck, Heart, User, Compass, ArrowRight, RotateCcw, Loader2, Copy, School, HelpCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
+import { findCareerOrGenerate, getUniversityBoothQuestions } from '../data/ovdiaKnowledgeBase';
 import { generateOvdiaPdf } from '../utils/generateOvdiaPdf';
 
 export function StepExecutiveReport({
@@ -16,6 +16,23 @@ export function StepExecutiveReport({
   const [showFamilyModal, setShowFamilyModal] = useState(false);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [copiedQuestions, setCopiedQuestions] = useState(false);
+
+  const boothQuestions = getUniversityBoothQuestions(careerData);
+
+  const handleCopyQuestions = () => {
+    const text = `🎯 PREGUNTAS CLAVE PARA STANDS UNIVERSITARIOS (${careerData.name})
+Metodología OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
+
+${boothQuestions.map((q, i) => `${i + 1}. ${q.category}
+👉 Pregunta: "${q.question}"
+💡 Ojo: ${q.tip}`).join('\n\n')}
+
+Llévalas en tu celular para auditar a las universidades en la feria.`;
+    navigator.clipboard.writeText(text);
+    setCopiedQuestions(true);
+    setTimeout(() => setCopiedQuestions(false), 2500);
+  };
 
   const studentCleanName = studentData?.name 
     ? studentData.name.trim().replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g, '').replace(/\s+/g, '_')
@@ -356,6 +373,80 @@ export function StepExecutiveReport({
           </div>
         </div>
 
+      </div>
+
+      {/* SECCIÓN INTERACTIVA: PREGUNTAS AUDITORAS PARA STANDS UNIVERSITARIOS */}
+      <div className="no-print bg-slate-900/90 border border-indigo-500/30 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-md space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+          <div className="flex items-start gap-3">
+            <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-indigo-400 mt-1 shrink-0">
+              <School className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-bold uppercase tracking-wider mb-1">
+                Herramienta Táctica para la Feria
+              </div>
+              <h3 className="text-lg md:text-xl font-black text-white">
+                5 Preguntas para Hacer a las Universidades que te Ofrezcan {careerData.name}
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                No te quedes con folletos bonitos: haz estas preguntas clave a los reclutadores para saber si su plan está al día o desactualizado.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleCopyQuestions}
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-lg shrink-0 ${
+              copiedQuestions
+                ? 'bg-emerald-500 text-white'
+                : 'bg-indigo-600 hover:bg-indigo-500 text-white hover:scale-105 active:scale-95'
+            }`}
+          >
+            {copiedQuestions ? (
+              <>
+                <CheckCircle2 className="w-4 h-4" />
+                <span>¡Copiadas al Portapapeles!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4" />
+                <span>Copiar Preguntas a mi Celular</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {boothQuestions.map((q, idx) => (
+            <div
+              key={idx}
+              className={`p-4 rounded-2xl border transition-all ${
+                q.highlight
+                  ? 'md:col-span-2 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-slate-900 border-indigo-500/40 shadow-inner'
+                  : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-400 bg-indigo-950/60 px-2.5 py-0.5 rounded-full border border-indigo-800/40">
+                  {idx + 1}. {q.category}
+                </span>
+                {q.highlight && (
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/40">
+                    ★ Clave de Especialidad
+                  </span>
+                )}
+              </div>
+              <p className="text-sm font-semibold text-white mb-2 leading-snug">
+                "{q.question}"
+              </p>
+              <p className="text-xs text-slate-400 leading-relaxed bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/60">
+                <span className="font-bold text-slate-300">💡 Qué buscar en su respuesta:</span> {q.tip}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Reset for next student button (Booth flow) */}

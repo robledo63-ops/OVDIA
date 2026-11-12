@@ -24,13 +24,13 @@ export function StepSerendipityHappenstance({ onNext, onBack, studentName }) {
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-400">
           <span>Pilar II Metodológico</span>
           <span>•</span>
-          <span>Serendipia Planificada (John Krumboltz, Stanford)</span>
+          <span>Serendipia: Cómo convertir imprevistos en oportunidades</span>
         </div>
         <h2 className="text-3xl md:text-4xl font-heading font-black">
-          El 80% del Éxito nace de <span className="text-cyan-400">Sucesos Fortuitos</span>
+          El 80% del Éxito nace de <span className="text-cyan-400">Oportunidades Inesperadas</span>
         </h2>
         <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-          {studentName}, la orientación tradicional pretendía que trazaras una línea recta a 40 años. Krumboltz demostró que los imprevistos son inevitables: tu superpoder es transformarlos en oportunidades.
+          {studentName}, la orientación tradicional te decía que planearas tu vida en línea recta a 40 años. En la vida real, las sorpresas son inevitables: tu verdadero superpoder es aprovecharlas para abrir nuevas puertas.
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export function StepSerendipityHappenstance({ onNext, onBack, studentName }) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-400 block">
-              Simulador de Giros Inesperados de la Realidad
+              Simulador de Situaciones Inesperadas
             </span>
             <h3 className="text-xl md:text-2xl font-heading font-black text-white mt-1">
               {scenario.title}
@@ -64,13 +64,13 @@ export function StepSerendipityHappenstance({ onNext, onBack, studentName }) {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 text-xs font-bold transition-all shadow-sm cursor-pointer disabled:opacity-50"
           >
             <Shuffle className={`w-4 h-4 ${isSpinning ? 'animate-spin' : ''}`} />
-            <span>Girar Ruleta de Giro Inesperado</span>
+            <span>Probar otra situación 🎲</span>
           </button>
         </div>
 
         {/* The Event */}
         <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-sm text-slate-200">
-          <strong className="text-cyan-400 block mb-1">⚡ El Suceso no Planificado:</strong>
+          <strong className="text-cyan-400 block mb-1">⚡ La Situación Inesperada:</strong>
           {scenario.event}
         </div>
 
@@ -96,7 +96,7 @@ export function StepSerendipityHappenstance({ onNext, onBack, studentName }) {
         </div>
 
         <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs flex items-center justify-between">
-          <span className="text-slate-400">Competencias OVDIA que se activaron:</span>
+          <span className="text-slate-400">Habilidades clave que se pusieron a prueba:</span>
           <span className="font-bold text-cyan-400">{scenario.competencyActivated}</span>
         </div>
       </div>

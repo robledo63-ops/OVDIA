@@ -14,13 +14,13 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-400">
           <span>Bloque II • Jugada 2.1</span>
           <span>•</span>
-          <span>Deconstrucción Ocupacional al 2030</span>
+          <span>Análisis de tu Carrera al 2030</span>
         </div>
         <h2 className="text-3xl md:text-4xl font-heading font-black">
-          Auditoría de Futuro: <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">{careerData.name}</span>
+          Radiografía de Futuro: <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">{careerData.name}</span>
         </h2>
         <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-          {studentName}, la IA no eliminará tu carrera completa: automatizará las tareas mecánicas. Quien compite memorizando pierde; quien colabora con la máquina usando juicio ético y empatía se vuelve insustituible.
+          {studentName}, la tecnología no borrará tu carrera: se encargará de las tareas rutinarias y repetitivas. Quien compite memorizando se desgasta; quien aprende a usar las nuevas herramientas con criterio propio y empatía se vuelve insustituible.
         </p>
       </div>
 
@@ -28,7 +28,7 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
       <div className="p-4 md:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/80 via-slate-900/90 to-indigo-950/80 border border-cyan-500/40 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
         <div className="space-y-1">
           <span className="text-[10px] font-bold uppercase tracking-widest text-cyan-400 block">
-            Rol Híbrido Emergente al 2030 (El Perfil que Contratará el Mercado):
+            Rol Profesional hacia el 2030 (El Perfil que Buscará el Mercado):
           </span>
           <span className="text-lg md:text-xl font-heading font-black text-white">
             {careerData.emergentRole2030}
@@ -38,12 +38,12 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
           {careerData.fromAI && (
             <div className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-indigo-950 border border-indigo-600/70 text-indigo-300 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-              <span>Deconstruido con {careerData.aiProvider || 'IA en Vivo'}</span>
+              <span>Análisis Generado con {careerData.aiProvider || 'IA en Vivo'}</span>
             </div>
           )}
           <div className="flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-950 border border-cyan-800 text-cyan-300">
             <Sparkles className="w-4 h-4 text-cyan-400" />
-            <span>Disrupción Operativa: {careerData.disruptionScore}%</span>
+            <span>Automatización con IA: {careerData.disruptionScore}%</span>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
           }`}
         >
           <Layers className="w-3.5 h-3.5" />
-          <span>Regla de Deconstrucción 70/30</span>
+          <span>Regla 70/30: IA vs. Tu Valor Humano</span>
         </button>
         <button
           type="button"
@@ -72,7 +72,7 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
           }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
-          <span>Auditoría de Malla (Puntos Ciegos)</span>
+          <span>Materias vs. Mercado Real</span>
         </button>
       </div>
 
@@ -87,19 +87,19 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">Territorio de la Máquina</span>
-                <h3 className="font-heading font-black text-base text-white">70% Operativo Automatizable</h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">Lo que automatiza la tecnología</span>
+                <h3 className="font-heading font-black text-base text-white">70% Tareas Repetitivas y Mecánicas</h3>
               </div>
             </div>
             
             <p className="text-xs text-slate-400">
-              Tareas repetitivas, mecánicas o de procesamiento de datos que la IA hace y hará en segundos. Si tu formación se limita a esto, tu perfil estará en riesgo:
+              Tareas rutinarias o de procesamiento de datos que la tecnología hace y hará en segundos. Si tu preparación se limita solo a esto, tu perfil estará en riesgo:
             </p>
 
             <ul className="space-y-2.5 pt-1">
               {careerData.automatedTasks.map((task, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-300 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
-                  <span className="text-cyan-400 font-bold mt-0.5">✕</span>
+                  <span className="text-cyan-400 font-bold mt-0.5">•</span>
                   <span className="leading-relaxed">{task}</span>
                 </li>
               ))}
@@ -113,13 +113,13 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
                 <UserCheck className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">Tu Ventaja Competitiva</span>
-                <h3 className="font-heading font-black text-base text-white">30% Superpoderes Humanos</h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">Tu Mayor Fortaleza Humana</span>
+                <h3 className="font-heading font-black text-base text-white">30% Habilidades Humanas Únicas</h3>
               </div>
             </div>
 
             <p className="text-xs text-indigo-200">
-              Habilidades afectivas, éticas y de negociación que exigen cuerpo, biografía, dilema moral y presencia real. Esto es lo que justificará honorarios altos al 2030:
+              Criterio ético, empatía y trato humano que ninguna máquina puede reemplazar. Esto es lo que te abrirá las mejores oportunidades laborales al 2030:
             </p>
 
             <ul className="space-y-2.5 pt-1">
@@ -140,10 +140,10 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
         <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 backdrop-blur-md animate-fadeIn">
           <div>
             <h3 className="font-heading font-black text-xl text-white">
-              Auditoría de Rezagos y Puntos Ciegos Universitarios
+              Comparativa: Materias Tradicionales vs. Lo que Pide el Mercado
             </h3>
             <p className="text-xs md:text-sm text-slate-400 mt-1">
-              La mayoría de los planes de estudio en América Latina tardan entre 5 y 10 años en actualizarse. El estudiante OVDIA audita su carrera antes de inscribirse para saber qué debe aprender por su cuenta:
+              Muchos planes universitarios tardan varios años en actualizarse. Un estudiante informado revisa su carrera antes de inscribirse para saber qué debe aprender por su cuenta:
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
             <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-900/40 space-y-3">
               <div className="flex items-center gap-2 text-rose-400 font-bold text-xs uppercase tracking-wider">
                 <AlertOctagon className="w-4 h-4" />
-                <span>Materias Tradicionales con Alto Riesgo de Obsolescencia:</span>
+                <span>Materias Tradicionales en Riesgo de Quedar Desfasadas:</span>
               </div>
               <ul className="space-y-2 text-xs text-slate-300">
                 {careerData.obsoleteSubjects.map((sub, idx) => (
@@ -168,7 +168,7 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
             <div className="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-800/40 space-y-3">
               <div className="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
-                <span>Puntos Ciegos (Lo que el Mercado Exige y la Escuela No Enseña):</span>
+                <span>Lo que las Empresas Buscan y la Escuela No Siempre Enseña:</span>
               </div>
               <ul className="space-y-2 text-xs text-slate-300">
                 {careerData.curriculumBlindSpots.map((blind, idx) => (
@@ -182,8 +182,8 @@ export function StepDeconstruction2030({ careerName, careerProfile, studentName,
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-slate-300">
-            <strong className="text-cyan-400 block mb-1">💡 La Solución OVDIA: Estrategia Bimodal</strong>
-            No te quejes de que la universidad no actualice el plan; cursa la licenciatura formal (Vía 1) mientras obtienes microcredenciales ágiles de 3 meses (Vía 2) para cubrir estos puntos ciegos.
+            <strong className="text-cyan-400 block mb-1">💡 La Solución OVDIA: Estrategia de Dos Caminos</strong>
+            Cursa tu carrera universitaria (Vía 1) y al mismo tiempo complementa con cursos prácticos cortos de 3 meses (Vía 2) para dominar lo que el mercado laboral busca.
           </div>
         </div>
       )}

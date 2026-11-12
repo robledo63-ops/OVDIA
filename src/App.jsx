@@ -194,7 +194,7 @@ export function App() {
           Desarrollado y fundamentado por el Lic. Francisco Javier Robledo Zatarain (Tijuana, B.C., México)
         </p>
         <p className="text-[10px] text-slate-400 pt-1">
-          Human-in-the-Loop • Anonymity-by-Design • Teoría del Caos • Serendipia Planificada • Stanford Life Design
+          Privacidad y Confidencialidad • Acompañamiento Humano • Metodología Stanford Life Design • Prospección al 2030
         </p>
       </footer>
 

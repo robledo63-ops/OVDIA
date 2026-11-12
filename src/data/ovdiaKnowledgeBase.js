@@ -778,3 +778,62 @@ export function findCareerOrGenerate(careerQuery) {
     }
   };
 }
+
+// Generador de Preguntas Clave para Stands Universitarios
+// Diseñado para empoderar al estudiante en la feria universitaria y auditar a los reclutadores
+export function getUniversityBoothQuestions(careerData) {
+  const name = careerData?.name || 'esta carrera';
+  const blindSpot = careerData?.curriculumBlindSpots?.[0] || 'herramientas digitales y de inteligencia artificial';
+  
+  let specificQuestion = `¿Qué materias prácticas de su plan de estudios cubren directamente puntos ciegos actuales como ${blindSpot}?`;
+  const lower = name.toLowerCase();
+
+  if (lower.includes('medicina') || lower.includes('enferm') || lower.includes('salud') || lower.includes('nutric')) {
+    specificQuestion = '¿Tienen campos clínicos y plazas de internado hospitalario garantizadas para todos los alumnos, y cuentan con simuladores clínicos de alta fidelidad?';
+  } else if (lower.includes('derecho') || lower.includes('jurídic') || lower.includes('leyes') || lower.includes('criminol')) {
+    specificQuestion = '¿Cuentan con salas de juicios orales activas y clínicas jurídicas con casos reales donde los estudiantes litiguen antes de graduarse?';
+  } else if (lower.includes('software') || lower.includes('sistemas') || lower.includes('comput') || lower.includes('tecnolog') || lower.includes('inteligencia artificial') || lower.includes('datos')) {
+    specificQuestion = '¿Tienen convenios activos con empresas tecnológicas (Microsoft, AWS, Google, etc.) y laboratorios en la nube para trabajar en proyectos reales?';
+  } else if (lower.includes('psicolog') || lower.includes('mental')) {
+    specificQuestion = '¿Cuentan con centros comunitarios de atención psicológica donde los estudiantes atiendan pacientes bajo supervisión docente antes de egresar?';
+  } else if (lower.includes('administra') || lower.includes('negocio') || lower.includes('mercad') || lower.includes('finanz') || lower.includes('comercio')) {
+    specificQuestion = '¿Tienen incubadora de negocios activa con vinculación a empresas o fondos de inversión, y estancias empresariales ejecutivas reales?';
+  } else if (lower.includes('diseño') || lower.includes('arquitect') || lower.includes('arte') || lower.includes('moda') || lower.includes('animac')) {
+    specificQuestion = '¿El costo de colegiatura incluye acceso libre a talleres de prototipado (impresión 3D, corte láser) y licencias completas del software profesional que pide la industria?';
+  } else if (lower.includes('ingeni') || lower.includes('mecatr') || lower.includes('electr') || lower.includes('industr')) {
+    specificQuestion = '¿Sus laboratorios y maquinaria están al nivel de la industria regional actual (automatización, PLC, robótica) o son únicamente demostrativos?';
+  }
+
+  return [
+    {
+      id: 'actualizacion',
+      category: '📅 Actualización del Plan de Estudios',
+      question: `¿En qué año se actualizó por última vez el plan de estudios de ${name} y qué materias prácticas incluyen Inteligencia Artificial y software moderno?`,
+      tip: 'Si el plan tiene más de 5 años sin actualizarse, tendrás que aprender la tecnología moderna por tu cuenta.'
+    },
+    {
+      id: 'empleabilidad',
+      category: '💼 Empleabilidad y Salarios Reales',
+      question: `¿Qué porcentaje de sus egresados de ${name} consigue trabajo formal en su área antes de 6 meses y cuál es el salario promedio de inicio?`,
+      tip: 'Pide datos concretos de egresados recientes, no promesas generales del folleto.'
+    },
+    {
+      id: 'practicas',
+      category: '🏢 Prácticas Profesionales Tempranas',
+      question: `¿Tienen convenios con empresas para hacer prácticas profesionales desde el 2.° o 3.er año, o las prácticas son solo hasta el final de la carrera?`,
+      tip: 'Quien empieza a hacer prácticas desde la mitad de la carrera tiene el doble de probabilidad de quedarse contratado.'
+    },
+    {
+      id: 'certificaciones',
+      category: '⚡ Certificaciones y Microcredenciales',
+      question: `¿El plan de estudios me permite obtener certificaciones técnicas o diplomados oficiales mientras estudio, para empezar a generar ingresos antes de titularme?`,
+      tip: 'Las universidades modernas ofrecen títulos intermedios o microcredenciales válidas en la industria.'
+    },
+    {
+      id: 'especialidad',
+      category: '🎯 Pregunta Clave de Especialidad',
+      question: specificQuestion,
+      tip: 'Esta pregunta demostrará que investigaste a fondo tu carrera y no te conformas con respuestas superficiales.'
+    }
+  ];
+}

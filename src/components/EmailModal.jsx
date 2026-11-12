@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, CheckCircle2, Send, Loader2, Sparkles, FileText, ArrowRight, Share2, Download, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
-import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
+import { findCareerOrGenerate, getUniversityBoothQuestions } from '../data/ovdiaKnowledgeBase';
 
 const DEFAULT_EMAILJS = {
   serviceId: 'service_zo8yabm',
@@ -97,6 +97,13 @@ Ingresos tempranos: ${careerData.bimodalPath.earlyIncome || 'Proyectos y consult
 ============================================================
 - Acelerador Táctico (Plan B): ${careerData.odysseyPlans.plan2.title}
 - Prototipado Rápido a 7 Días: ${careerData.rapidPrototype.interviewTitle}
+
+============================================================
+6. 5 PREGUNTAS TÁCTICAS PARA HACER A STANDS UNIVERSITARIOS
+============================================================
+${getUniversityBoothQuestions(careerData).map((q, i) => `${i + 1}. ${q.category}:
+   Pregunta: "${q.question}"
+   Ojo: ${q.tip}`).join('\n\n')}
 
 ============================================================
 DECLARACIÓN DE SINTONÍA Y COMPROMISO FAMILIAR (ACUERDO A 30 DÍAS)
@@ -277,7 +284,29 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
       </td>
     </tr>
 
-    <!-- SECCION 5: COMPROMISO FAMILIAR -->
+    <!-- SECCION 5: 5 PREGUNTAS PARA STANDS UNIVERSITARIOS -->
+    <tr>
+      <td style="padding: 0 28px 24px;">
+        <div style="font-size: 13px; font-weight: 800; color: #818cf8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
+          🎯 5 Preguntas Clave para Hacer en Stands Universitarios
+        </div>
+        ${getUniversityBoothQuestions(careerData).map((q, idx) => `
+          <div style="background-color: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 12px 14px; margin-bottom: 8px;">
+            <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">
+              ${idx + 1}. ${q.category}
+            </div>
+            <div style="font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: 4px; line-height: 1.4;">
+              "${q.question}"
+            </div>
+            <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">
+              <strong style="color: #cbd5e1;">Qué buscar:</strong> ${q.tip}
+            </div>
+          </div>
+        `).join('')}
+      </td>
+    </tr>
+
+    <!-- SECCION 6: COMPROMISO FAMILIAR -->
     <tr>
       <td style="padding: 0 28px 28px;">
         <div style="background-color: #0f172a; border-radius: 8px; padding: 16px 18px; border: 1px solid #1e293b; font-size: 12px; color: #94a3b8; font-style: italic; line-height: 1.6;">

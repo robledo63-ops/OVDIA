@@ -235,12 +235,12 @@ export function WelcomeHero({ onStart, initialData }) {
           <div className="flex items-center justify-center gap-4 text-[11px] text-slate-500 pt-2 border-t border-slate-800/80">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Protocolo Anonymity-by-Design
+              100% Confidencial y Seguro
             </span>
             <span>•</span>
-            <span>Gobernanza Human-in-the-Loop</span>
+            <span>Supervisado por Profesionales</span>
             <span>•</span>
-            <span>Validado con Cohorte de 240 Alumnos</span>
+            <span>Probado con más de 240 Alumnos de Bachillerato</span>
           </div>
 
         </form>

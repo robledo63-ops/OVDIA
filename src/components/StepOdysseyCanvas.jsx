@@ -25,16 +25,16 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
     },
     {
       id: 'plan2',
-      title: 'Plan 2: Ruta Bimodal',
-      subtitle: '¿Qué harías si la Opción 1 muta o se satura?',
+      title: 'Plan 2: Ruta de Respaldo (Plan B)',
+      subtitle: '¿Qué harías si la Opción 1 cambia o se satura?',
       data: careerData.odysseyPlans.plan2,
-      tag: 'Blindaje Técnico',
+      tag: 'Respaldo Seguro',
       tagColor: 'bg-indigo-950 text-indigo-400 border-indigo-800'
     },
     {
       id: 'plan3',
-      title: 'Plan 3: Ruta Salvaje / Radical',
-      subtitle: 'Sin límites de dinero ni juicio social',
+      title: 'Plan 3: Vocación Libre / Creativa',
+      subtitle: 'Si el dinero o la opinión de otros no fueran problema',
       data: careerData.odysseyPlans.plan3,
       tag: 'Creatividad Pura',
       tagColor: 'bg-amber-950 text-amber-400 border-amber-800'
@@ -150,7 +150,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
           <div className="flex items-center justify-between text-xs font-bold text-slate-200">
             <span className="flex items-center gap-1.5 text-cyan-400 uppercase tracking-wider">
               <Sliders className="w-4 h-4" />
-              Los 4 Medidores de Coherencia de Stanford (Life Design Gauges):
+              Tus 4 Medidores de Seguridad y Confianza (Stanford Life Design):
             </span>
           </div>
 
@@ -176,7 +176,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
               <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-emerald-400 h-full rounded-full" style={{ width: `${gauges.like}%` }} />
               </div>
-              <span className="text-[10px] text-slate-500 block">Alineación con AEIOU</span>
+              <span className="text-[10px] text-slate-500 block">Cuánto te apasiona</span>
             </div>
 
             {/* Confidence */}
@@ -188,7 +188,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
               <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-indigo-400 h-full rounded-full" style={{ width: `${gauges.confidence}%` }} />
               </div>
-              <span className="text-[10px] text-slate-500 block">Autoeficacia real</span>
+              <span className="text-[10px] text-slate-500 block">Seguridad en ti mismo</span>
             </div>
 
             {/* Coherence */}
@@ -200,7 +200,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
               <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                 <div className="bg-amber-400 h-full rounded-full" style={{ width: `${gauges.coherence}%` }} />
               </div>
-              <span className="text-[10px] text-slate-500 block">Valores y propósito</span>
+              <span className="text-[10px] text-slate-500 block">Alineado a tus valores</span>
             </div>
           </div>
         </div>
@@ -211,7 +211,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
       <div className="p-5 rounded-3xl bg-indigo-950/30 border border-indigo-500/30 space-y-3">
         <div className="flex items-center gap-2 text-indigo-300 font-bold text-xs uppercase tracking-wider">
           <Zap className="w-4 h-4 text-indigo-400" />
-          <span>Estrategia Bimodal de Empleabilidad (Tu Blindaje OVDIA):</span>
+          <span>Tu Estrategia de Dos Caminos (Tu Blindaje OVDIA):</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-200">
           <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800">
@@ -219,7 +219,7 @@ export function StepOdysseyCanvas({ careerName, careerProfile, studentName, onNe
             {careerData.bimodalPath.via1}
           </div>
           <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800">
-            <strong className="text-emerald-400 block mb-1">⚡ Vía 2: Microcredenciales Rápidas (3 a 6 Meses)</strong>
+            <strong className="text-emerald-400 block mb-1">⚡ Vía 2: Cursos Prácticos y Certificaciones (3 a 6 Meses)</strong>
             {careerData.bimodalPath.via2}
           </div>
         </div>
