@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Compass, Sparkles, ArrowRight, ShieldCheck, Mail, User, BookOpen, Brain, Zap, HelpCircle } from 'lucide-react';
+import { Compass, Sparkles, ArrowRight, ShieldCheck, Mail, User, BookOpen, Brain, Zap } from 'lucide-react';
 import { CAREER_DATABASE } from '../data/ovdiaKnowledgeBase';
-import { PromptsLabModal } from './PromptsLabModal';
 
 export function WelcomeHero({ onStart, initialData }) {
   const [formData, setFormData] = useState({
@@ -13,7 +12,6 @@ export function WelcomeHero({ onStart, initialData }) {
   });
 
   const [showCustomInput, setShowCustomInput] = useState(false);
-  const [isPromptsOpen, setIsPromptsOpen] = useState(false);
 
   const popularCareers = [
     'Derecho y Ciencias Jurídicas',
@@ -219,16 +217,6 @@ export function WelcomeHero({ onStart, initialData }) {
                   </button>
                 </div>
               )}
-
-              <button
-                type="button"
-                onClick={() => setIsPromptsOpen(true)}
-                className="text-xs text-indigo-400 hover:text-indigo-300 font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-950/40 border border-indigo-800/50 cursor-pointer self-start sm:self-auto"
-                title="Abre las plantillas de Activación Previa si aún no sabes qué estudiar"
-              >
-                <HelpCircle className="w-3.5 h-3.5 text-indigo-400" />
-                <span>¿Aún indeciso? Actívate con IA</span>
-              </button>
             </div>
           </div>
 
@@ -257,16 +245,6 @@ export function WelcomeHero({ onStart, initialData }) {
 
         </form>
       </div>
-
-      {/* Prompts Lab Modal for Undecided Students */}
-      <PromptsLabModal
-        isOpen={isPromptsOpen}
-        onClose={() => setIsPromptsOpen(false)}
-        careerName={formData.career || 'Orientación Vocacional'}
-        studentName={formData.name}
-        initialTab="activacion"
-      />
-
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, CheckCircle2, Send, Loader2, Sparkles, FileText, ArrowRight, Settings, ExternalLink, Copy, Share2, Download, AlertCircle, Key, ChevronDown, ChevronUp } from 'lucide-react';
+import { Mail, CheckCircle2, Send, Loader2, Sparkles, FileText, ArrowRight, Share2, Download, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
 
@@ -14,10 +14,9 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
   const [isSending, setIsSending] = useState(false);
   const [sendStatus, setSendStatus] = useState(null); // { success: boolean, message: string }
   const [copiedSuccess, setCopiedSuccess] = useState(false);
-  const [showConfig, setShowConfig] = useState(false);
 
-  // EmailJS config stored in localStorage for the kiosk stand (preconfigurado de fábrica con tus credenciales)
-  const [emailJsConfig, setEmailJsConfig] = useState(() => {
+  // EmailJS config (preconfigurado de fábrica con tus credenciales)
+  const [emailJsConfig] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ovdia_emailjs_config');
       if (saved) {
@@ -44,9 +43,6 @@ export function EmailModal({ isOpen, onClose, studentData, baniData, aeiouData }
     templateId: emailJsConfig?.templateId?.trim() || DEFAULT_EMAILJS.templateId,
     publicKey: emailJsConfig?.publicKey?.trim() || DEFAULT_EMAILJS.publicKey
   };
-
-  const [configInputs, setConfigInputs] = useState(activeConfig);
-  const [configSavedNotice, setConfigSavedNotice] = useState(false);
 
   if (!isOpen) return null;
 
@@ -397,17 +393,8 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
     setIsSending(false);
     setSendStatus({
       success: false,
-      isUnconfigured: true,
-      message: 'Aún no se ha registrado una cuenta emisora oficial. Registra tu correo abajo en "Configuración de Correo Emisor" o usa el botón de Gmail.'
+      message: 'No se pudo contactar el servicio de correo. Puedes usar el botón de Gmail o WhatsApp abajo.'
     });
-  };
-
-  // Guardar configuración de EmailJS
-  const handleSaveConfig = () => {
-    localStorage.setItem('ovdia_emailjs_config', JSON.stringify(configInputs));
-    setEmailJsConfig(configInputs);
-    setConfigSavedNotice(true);
-    setTimeout(() => setConfigSavedNotice(false), 2500);
   };
 
   // Opciones manuales
@@ -518,15 +505,6 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
               )}
               <div className="space-y-1">
                 <span>{sendStatus.message}</span>
-                {sendStatus.isUnconfigured && (
-                  <button
-                    type="button"
-                    onClick={() => setShowConfig(true)}
-                    className="block text-cyan-300 underline font-semibold mt-1 cursor-pointer"
-                  >
-                    Registrar correo emisor ahora (Toma 2 minutos) →
-                  </button>
-                )}
               </div>
             </div>
           )}
@@ -559,73 +537,10 @@ Emitido bajo el Modelo OVDIA 2030 • Lic. Francisco Javier Robledo Zatarain
           </div>
         </div>
 
-        {/* Sender Email Setup (Acordeón para el Lic. Robledo) */}
-        <div className="pt-2 border-t border-slate-800/80">
-          <button
-            type="button"
-            onClick={() => setShowConfig(!showConfig)}
-            className="flex items-center justify-between w-full text-xs text-slate-400 hover:text-slate-200 font-semibold cursor-pointer py-1"
-          >
-            <span className="flex items-center gap-1.5">
-              <Settings className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Configuración de Correo Emisor (EmailJS)</span>
-            </span>
-            {showConfig ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-          </button>
-
-          {showConfig && (
-            <div className="mt-3 p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 animate-fadeIn text-xs">
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Para enviar correos <strong>100% automáticos</strong> desde tu propia cuenta de Gmail:
-                <br />
-                1. Crea una cuenta gratuita en <a href="https://www.emailjs.com" target="_blank" rel="noreferrer" className="text-cyan-400 underline">EmailJS.com ↗</a>.
-                <br />
-                2. En <em>Email Services</em> vincula tu correo de Gmail (ej. <code className="text-cyan-300">diplomadoia2025tj@gmail.com</code>).
-                <br />
-                3. Pega aquí tus 3 identificadores:
-              </p>
-
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  value={configInputs.serviceId}
-                  onChange={(e) => setConfigInputs({ ...configInputs, serviceId: e.target.value })}
-                  placeholder="Service ID (ej. service_gmail_ovdia)"
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 text-xs font-mono"
-                />
-                <input
-                  type="text"
-                  value={configInputs.templateId}
-                  onChange={(e) => setConfigInputs({ ...configInputs, templateId: e.target.value })}
-                  placeholder="Template ID (ej. template_ovdia2030)"
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 text-xs font-mono"
-                />
-                <input
-                  type="text"
-                  value={configInputs.publicKey}
-                  onChange={(e) => setConfigInputs({ ...configInputs, publicKey: e.target.value })}
-                  placeholder="Public Key (ej. user_xxxxxxxxxxxx)"
-                  className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-100 text-xs font-mono"
-                />
-              </div>
-
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  type="button"
-                  onClick={handleSaveConfig}
-                  className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs cursor-pointer"
-                >
-                  Guardar Cuenta Emisora
-                </button>
-                {configSavedNotice && (
-                  <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> ¡Guardado con éxito!
-                  </span>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
+        {/* Nota de privacidad y confidencialidad */}
+        <p className="text-[11px] text-slate-500 text-center leading-relaxed">
+          🔒 Tus datos son tratados bajo estricta confidencialidad para el despacho de tu reporte y seguimiento vocacional por el <strong className="text-slate-400">Lic. Francisco Javier Robledo Zatarain</strong>.
+        </p>
 
         <button
           type="button"

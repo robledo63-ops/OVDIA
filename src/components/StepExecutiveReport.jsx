@@ -3,7 +3,6 @@ import { Mail, Printer, Download, Sparkles, CheckCircle2, ShieldCheck, Heart, Us
 import confetti from 'canvas-confetti';
 import { findCareerOrGenerate } from '../data/ovdiaKnowledgeBase';
 import { generateOvdiaPdf } from '../utils/generateOvdiaPdf';
-import { PromptsLabModal } from './PromptsLabModal';
 
 export function StepExecutiveReport({
   studentData,
@@ -15,7 +14,6 @@ export function StepExecutiveReport({
 }) {
   const careerData = careerProfile || findCareerOrGenerate(studentData?.career);
   const [showFamilyModal, setShowFamilyModal] = useState(false);
-  const [showPromptsModal, setShowPromptsModal] = useState(false);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -139,17 +137,6 @@ export function StepExecutiveReport({
             >
               <Mail className="w-4 h-4" />
               <span>Enviar a mi Correo</span>
-            </button>
-
-            {/* Prompts Lab Button */}
-            <button
-              type="button"
-              onClick={() => setShowPromptsModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-cyan-800/80 text-cyan-300 text-xs font-bold transition-all cursor-pointer shadow-sm"
-              title="Ver y copiar las plantillas de prompts de la Semana 2"
-            >
-              <Terminal className="w-4 h-4 text-cyan-400" />
-              <span>Prompts Maestros</span>
             </button>
 
             {/* Family Kit Button */}
@@ -382,14 +369,6 @@ export function StepExecutiveReport({
           <span>Reiniciar Kiosco para el Siguiente Estudiante en Fila</span>
         </button>
       </div>
-
-      {/* Prompts Lab Modal */}
-      <PromptsLabModal
-        isOpen={showPromptsModal}
-        onClose={() => setShowPromptsModal(false)}
-        careerName={careerData.name}
-        studentName={studentData.name}
-      />
 
       {/* Family Kit Modal Popup */}
       {showFamilyModal && (

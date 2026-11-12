@@ -1,39 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { School, TrendingDown, Users, CheckCircle2, ShieldCheck, Copy, Award, BarChart3, AlertTriangle, Key, Cpu, Sparkles, AlertCircle, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { getAiApiKey, saveAiApiKey, testAiConnection, detectProvider } from '../services/aiService';
+import React, { useState } from 'react';
+import { School, TrendingDown, Users, CheckCircle2, ShieldCheck, Copy, Award, BarChart3, AlertTriangle } from 'lucide-react';
 
 export function UniversityDashboardModal({ isOpen, onClose, fairStats }) {
   const [copied, setCopied] = useState(false);
-  const [apiKeyInput, setApiKeyInput] = useState('');
-  const [showKey, setShowKey] = useState(false);
-  const [testStatus, setTestStatus] = useState(null); // { loading, success, message }
-
-  useEffect(() => {
-    if (isOpen) {
-      setApiKeyInput(getAiApiKey());
-      setTestStatus(null);
-    }
-  }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handleSaveAndTest = async () => {
-    setTestStatus({ loading: true, message: 'Probando conexión con la API de IA...' });
-    const clean = apiKeyInput.trim();
-    saveAiApiKey(clean);
-    
-    if (!clean) {
-      setTestStatus({ loading: false, success: false, message: 'Clave eliminada. El Kiosco operará con el motor heurístico local.' });
-      return;
-    }
-
-    const result = await testAiConnection(clean);
-    setTestStatus({
-      loading: false,
-      success: result.success,
-      message: result.message
-    });
-  };
 
   const letterText = `Estimado(a) Director(a) / Rector(a):
 
@@ -155,108 +126,6 @@ Titular Metodológico OVDIA • Tijuana, B.C.`;
               <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden">
                 <div className="bg-rose-500 h-full rounded-full" style={{ width: '15%' }} />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Live AI Engine Settings (OpenAI / Gemini) */}
-        <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-950 border border-indigo-800/60 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-cyan-950 text-cyan-400 border border-cyan-800/80">
-                <Cpu className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  Motor de IA en Vivo ({detectProvider(apiKeyInput) === 'openai' ? 'OpenAI GPT-4o-mini' : 'Google Gemini'})
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800">
-                    Semana 2
-                  </span>
-                </h4>
-                <p className="text-[11px] text-slate-400">
-                  Responde en tiempo real a carreras inéditas escritas por alumnos en el kiosco
-                </p>
-              </div>
-            </div>
-            {detectProvider(apiKeyInput) === 'openai' && (
-              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-800/80">
-                🟢 OpenAI Detectado
-              </span>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
-              <span className="flex items-center gap-1.5">
-                <Key className="w-3.5 h-3.5 text-cyan-400" />
-                Clave API (OpenAI <code className="text-cyan-300 font-mono">sk-...</code> o Gemini <code className="text-cyan-300 font-mono">AIza...</code>)
-              </span>
-              <span className="text-[10px] text-slate-400">
-                Auto-detección de proveedor
-              </span>
-            </label>
-
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <input
-                  type={showKey ? 'text' : 'password'}
-                  value={apiKeyInput}
-                  onChange={(e) => setApiKeyInput(e.target.value)}
-                  placeholder="Pega aquí tu clave: sk-proj-... o AIzaSy..."
-                  className="w-full px-3 py-2 pr-10 bg-slate-950 border border-slate-700 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 font-mono"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowKey(!showKey)}
-                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-200"
-                >
-                  {showKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
-                </button>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleSaveAndTest}
-                disabled={testStatus?.loading}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
-              >
-                {testStatus?.loading ? (
-                  <>
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    <span>Probando...</span>
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Guardar y Probar</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {testStatus && (
-              <div
-                className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-                  testStatus.loading
-                    ? 'bg-slate-950/80 border border-slate-700 text-slate-300'
-                    : testStatus.success
-                    ? 'bg-emerald-950/60 border border-emerald-700/60 text-emerald-300'
-                    : 'bg-rose-950/60 border border-rose-700/60 text-rose-300'
-                }`}
-              >
-                {testStatus.loading ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-cyan-400 shrink-0" />
-                ) : testStatus.success ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                ) : (
-                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                )}
-                <span>{testStatus.message}</span>
-              </div>
-            )}
-
-            <div className="text-[11px] text-slate-500 leading-snug pt-1">
-              💡 <strong>Arquitectura Blindada:</strong> La clave queda guardada de forma segura en este navegador. Si el internet del stand se cae, el Kiosco activa automáticamente el <em>Motor Heurístico Local OVDIA</em> sin que el alumno note ningún error.
             </div>
           </div>
         </div>
